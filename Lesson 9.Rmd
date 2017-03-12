@@ -1,0 +1,32 @@
+---
+title: "Lesson 9"
+author: "VIcki Hertzberg"
+date: "3/11/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Lesson 9
+
+We are changing things up the next couple of weeks. These changes include new due dates as follows:
+
+| Assignment  | Due       |
+|-------------|-----------|
+| HW5         | Today     |
+| HW6         | March 22  |
+| Milestone 2 | March 29  |
+
+And we are are going to adjust the topics for the class as follows:
+
+| Date  | Topic                                                |
+|-------|------------------------------------------------------|
+| Today | Machine Learning - Supervised Techniques             |
+| 3/22  | Machine Learning - Unsupervised Techniques           |
+| 3/29  | The Microbiome - fastq file to otu table to result   |
+| 4/5   | Continuation of 3/29 plus function plus AWS          |
+| 4/12  | Wrap up then free to do project work                 |
+| 4/19  | Project presentations                                |
+| 4/26  | Project presentations continued                      |
