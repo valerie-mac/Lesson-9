@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Lesson 9
+## Housekeeping
 
 We are changing things up the next couple of weeks. These changes include new due dates as follows:
 
@@ -30,3 +30,270 @@ And we are are going to adjust the topics for the class as follows:
 | 4/12  | Wrap up then free to do project work                 |
 | 4/19  | Project presentations                                |
 | 4/26  | Project presentations continued                      |
+
+
+Questions?
+
+As we are getting started, you will need to install and load the following R packages:
+
+* rpart
+* partykit
+* tidyverse
+* faraway
+* randomForest
+
+## Machine Learning: Supervised Techniques
+
+Our goal is to predict some outcome variable, Y, from a set of independent variables,
+
+\begin{equation}
+
+\{ X_1, X_2, ..., X_p \}
+
+\end{equation}
+
+Let's think back to linear regression. We have a basic model
+
+\begin{equation}
+
+Y = \beta_0 + \beta_1 X_1 + ... + \beta_p X_p
+
+\end{equation}
+
+Our goal is to have the fewest independent variables while maintaining a good predictive capacity. 
+
+Linear regression has several advantages:
+
+* There is very nice theory going along with it.
+* It scales well.
+
+But these advantages do not come without a price:
+
+* It is only one type of model (or function) for the mean
+* Yet the space of possible model forms is infinite.
+
+With *machine learning* the idea is that a model can be tuned to a specific data set. This term arose in the 1950's for a set of techniques to extract as much information as possible from a dataset without human intervention. Nowdays we search for good models where good means:
+
+* the model makes accurate predictions; and
+* the model scales well.
+
+This is not to say that regression is obsolete, because it is still the starter model.
+
+As mentioned above there are two types of machine learning:
+
+* Supervised: we model a particular response as a funciton of some explanatory variables
+* Unsupervised: we find patterns or groupings where there exists no clear response variables.
+
+Today we are talking about supervised learning. In this case we want to identify the function that that describes the relationship between inputs and outputs, kind of like a black box. For instance,
+
+* you can use season as input and outdoor temperature as output
+* you can use latitude and day of the year as input and outdoor temperature as output
+
+So suppose we have successive ozone readings, but we also have some other information and we want to choose from a set of independent variables.
+
+One way that we can choose the independent variables is to create a *regression tree* such that the variables split the space into a series of partitions where the outcome variables are more and more alike. 
+
+Well that certainly sounds like a big mess, doesn't it?
+
+This technique is called *recursive partitioning* and it enables exploring the data space, making it easier to visualize decision rules of for a continuous outcome (a regression tree), like we are examining here, or for a categorical outcome (a decision tree), like we will talk about in a bit.
+
+One R tool that makes this a lot easier to implement is the package called rpart, and we will load it now. 
+
+```{r}
+library(rpart)
+library(tidyverse)
+```
+
+We will proceed in a stepwise manner. 
+
+1. Grow the tree.
+2. Explore the results.
+3. Prune the tree.
+
+### 1. Grow the Tree
+
+To grow the tree we will use the command
+
+_rpart_(*formula*, _data =_, _method =_, _control =_) where 
+
+* *formula* is in the format Y ~ X1 + X2 + ... + Xp
+
+* _data =_ specifies the data frame
+
+* _method = "anova"_ for a regression tree
+
+* _method = "class"_ for a decision tree
+
+* _control =_ a series of optional parameters that controls the process of tree growth.
+
+The output is an object called *fit*. 
+
+### 2. Explore the Results
+
+We can use the following functions to examine the results.
+
+| Function       | Description                                  |
+|----------------|----------------------------------------------|
+| printcp(fit)   | display the cp table                         |
+| plotcp(fit)    | plot cross-validation results                |
+| rsp.rpart(fit) | plot approx. R-squared for 2 different splits|
+| print(fit)     | print results                                |
+| summary(fit)   | detailed results including surrogate splits  |
+| plot(fit)      | plot decision tree                           |
+| text(fit)      | label the decision tree plot                 |
+
+
+### 3. Prune Tree
+
+We will want to prune the tree in order to avoid overfitting the data. We will select the tree size the minimizes the cross-validated error (see the *xerror* column printed with *printcp(fit)*). We will then prune to the desired size using
+
+*prune(fit, cp=)*
+
+Specifically you use *printcp()* to select the complexity parameter associated with the minimum error, then place it into the *prune()* function.
+
+#### Example
+
+We are going to explore the *ozone* dataset that comes as part of the *faraway* package. We want to predict Ozone from the other variables, but we are going to do it by partitioning the space. First let's load up the dataset and name see what's what.
+
+```{r}
+library(faraway) #Install to get access to the  dataset
+
+
+```
+
+
+The variable names are as follows:
+
+| Variable Name | Description             |
+|---------------|-------------------------|
+| O3            | Daily Ozone Level       |
+| vh            | Pressure height         |
+| wind          | Wind speed at LAX       |
+| temp          | Temperature             |
+| ibh           | Inversion base height   |
+| dpg           | Pressure gradient       |
+| ibt           | Inversion base temp     |
+| vis           | Visibility at LAX       |
+| doy           | Day of year             |
+
+Let's take a look:
+
+```{r}
+summary(ozone)  # What does the dataset look like?
+
+
+
+glimpse (ozone) # Let's take a little glimpse
+
+
+```
+
+The basic idea of a regression tree is that we split the dataset into increasingly finer partitions with the goal of reducing variability of our outcome variable. In this case our outcome variable is ozone, O3. What happens if we split the dataset into two partitions at the median of the variable temperature. What is the variability of O3 in those two subsets, and how does that compare to its variability in the overall dataset?
+
+```{r}
+
+var(ozone$O3) # Overall variability of ozone
+
+
+# Let's split at median of temperature
+
+temp.lt.med <- filter(ozone, temp < 62)
+temp.ge.med <- filter(ozone, temp >= 62)
+
+var(temp.lt.med$O3)
+var(temp.ge.med$O3)
+```
+
+So you see, we have created two subsets in which the variability of our outcome variable is reduced. Regression trees use that basic principle to keep growing, all the time reducing the variability.
+
+Suppose we just wanted to partition on the basis of the variable temperature, we just call it up in the package rpart
+
+
+```{r}
+fittemp <- rpart(O3 ~ temp, data = ozone)
+
+```
+
+Let's look at the results:
+
+```{r}
+printcp(fittemp) # Display the results
+plotcp(fittemp) # Visualize cross-validation results
+summary(fittemp) # Detailed summary of fit
+```
+
+
+```{r}
+# plot tree
+plot(fittemp, uniform = TRUE, compress = FALSE)
+text(fittemp, use.n = TRUE, all = TRUE, cex = 0.5)
+```
+
+Now we can throw all of the variables in, and see how it partitions:
+
+```{r}
+fitall <- rpart(O3 ~ ., data = ozone)
+```
+
+So what does this partition look like?
+
+```{r}
+# Now let's look at fitall
+printcp(fitall) # Display the results
+plotcp(fitall) # Visualize cross-validation results
+summary(fitall) # Detailed summary of fit
+
+```
+ 
+ And for the plot:
+ 
+ 
+```{r}
+plot(fitall, uniform = TRUE, compress = FALSE, main = "Regression Tree for Ozone Dataset")
+text(fitall, use.n = TRUE, all = TRUE, cex = 0.5)
+```
+
+Let's think about pruning the tree now. 
+
+```{r}
+# Prune the tree
+pfit <- prune(fitall, cp = fitall$cptable[which.min(fitall$cptable[, "xerror"]), "CP"])
+
+# Plot the pruned tree
+plot(pfit, uniform = TRUE, compress = FALSE, main = "Pruned Regression Tree for Ozone")
+text(pfit, use.n = TRUE, all = TRUE, cex = 0.5)
+
+```
+
+The package *party* provides nonparametric regression trees, and it also creates better graphics. Let's giv it a try.
+
+```{r}
+library(party)
+
+fitallp <- ctree(O3 ~ ., data = ozone)
+plot(fitallp, main = "Conditional Inference Tree for Ozone")
+```
+
+In this package, tree growth is based on statistical stopping rules, thus pruning shoul not be necessary.
+
+
+Another type of classifier is a decision tree. This comes from logistic regression. You will recall a couple of weeks ago we talked about the generalized linear model, and logistic regression is one form of such a model.
+
+### Random Forests
+
+Random forests improve predictive accuracy by generating a large number of bootstrapped trees, then averaging across all trees. This is implemented in (what else?) the *randomForest* package.
+
+```{r}
+library(randomForest)
+
+set.seed(131)
+# Random Forest for the ozone dataset
+fitallrf <- randomForest(O3 ~ ., data = ozone, importance = TRUE)
+impallrf <- importance(fitallrf)
+
+# view the results
+print(fitallrf)
+importance(fitallrf)
+
+```
+
