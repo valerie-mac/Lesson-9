@@ -9,7 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Vicki Hertzberg" />
+<meta name="author" content="Valerie Mac" />
 
 
 <title>HW6</title>
@@ -117,8 +117,8 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">HW6</h1>
-<h4 class="author"><em>Vicki Hertzberg</em></h4>
-<h4 class="date"><em>3/15/2017</em></h4>
+<h4 class="author"><em>Valerie Mac</em></h4>
+<h4 class="date"><em>3/22/2017</em></h4>
 
 </div>
 
@@ -130,10 +130,78 @@ $(document).ready(function () {
 <ol style="list-style-type: decimal">
 <li>Document that you have installed <code>dada2</code> and <code>phyloseq</code>, as well as <code>shortread</code> and <code>ggplot2</code>. Use the installation guide at the dada2 site: (<a href="http://benjjneb.github.io/dada2/index.html" class="uri">http://benjjneb.github.io/dada2/index.html</a>)[<a href="http://benjjneb.github.io/dada2/index.html" class="uri">http://benjjneb.github.io/dada2/index.html</a>].</li>
 </ol>
-<ul>
-<li>Sufficient documentation would consist of the following R commands (in an R chunk, of course), one line per required package:</li>
-</ul>
-<p>library(<em>package_name</em>); packageVersion(“<em>package_name</em>”);</p>
+<div id="here-is-sufficient-documentation-of-the-installation-of-dada2-phyloseq-shortread-ggplot2" class="section level3">
+<h3>Here is sufficient documentation of the installation of dada2, phyloseq, ShortRead, ggplot2:</h3>
+<pre class="r"><code>library(dada2); packageVersion(&quot;dada2&quot;);</code></pre>
+<pre><code>## Warning: package 'dada2' was built under R version 3.3.3</code></pre>
+<pre><code>## Loading required package: Rcpp</code></pre>
+<pre><code>## Warning: package 'Rcpp' was built under R version 3.3.3</code></pre>
+<pre><code>## [1] '1.2.2'</code></pre>
+<pre class="r"><code>library(phyloseq); packageVersion(&quot;phyloseq&quot;);</code></pre>
+<pre><code>## [1] '1.19.1'</code></pre>
+<pre class="r"><code>library(ShortRead); packageVersion(&quot;ShortRead&quot;);</code></pre>
+<pre><code>## Warning: package 'ShortRead' was built under R version 3.3.3</code></pre>
+<pre><code>## Loading required package: BiocGenerics</code></pre>
+<pre><code>## Loading required package: parallel</code></pre>
+<pre><code>## 
+## Attaching package: 'BiocGenerics'</code></pre>
+<pre><code>## The following objects are masked from 'package:parallel':
+## 
+##     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+##     clusterExport, clusterMap, parApply, parCapply, parLapply,
+##     parLapplyLB, parRapply, parSapply, parSapplyLB</code></pre>
+<pre><code>## The following objects are masked from 'package:stats':
+## 
+##     IQR, mad, xtabs</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     anyDuplicated, append, as.data.frame, cbind, colnames,
+##     do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+##     grepl, intersect, is.unsorted, lapply, lengths, Map, mapply,
+##     match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+##     Position, rank, rbind, Reduce, rownames, sapply, setdiff,
+##     sort, table, tapply, union, unique, unsplit, which, which.max,
+##     which.min</code></pre>
+<pre><code>## Loading required package: BiocParallel</code></pre>
+<pre><code>## Loading required package: Biostrings</code></pre>
+<pre><code>## Loading required package: S4Vectors</code></pre>
+<pre><code>## Warning: package 'S4Vectors' was built under R version 3.3.3</code></pre>
+<pre><code>## Loading required package: stats4</code></pre>
+<pre><code>## 
+## Attaching package: 'S4Vectors'</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     colMeans, colSums, expand.grid, rowMeans, rowSums</code></pre>
+<pre><code>## Loading required package: IRanges</code></pre>
+<pre><code>## Warning: package 'IRanges' was built under R version 3.3.3</code></pre>
+<pre><code>## 
+## Attaching package: 'IRanges'</code></pre>
+<pre><code>## The following object is masked from 'package:phyloseq':
+## 
+##     distance</code></pre>
+<pre><code>## Loading required package: XVector</code></pre>
+<pre><code>## Warning: package 'XVector' was built under R version 3.3.3</code></pre>
+<pre><code>## Loading required package: Rsamtools</code></pre>
+<pre><code>## Loading required package: GenomeInfoDb</code></pre>
+<pre><code>## Loading required package: GenomicRanges</code></pre>
+<pre><code>## Warning: package 'GenomicRanges' was built under R version 3.3.3</code></pre>
+<pre><code>## Loading required package: GenomicAlignments</code></pre>
+<pre><code>## Warning: package 'GenomicAlignments' was built under R version 3.3.3</code></pre>
+<pre><code>## Loading required package: SummarizedExperiment</code></pre>
+<pre><code>## Loading required package: Biobase</code></pre>
+<pre><code>## Welcome to Bioconductor
+## 
+##     Vignettes contain introductory material; view with
+##     'browseVignettes()'. To cite Bioconductor, see
+##     'citation(&quot;Biobase&quot;)', and for packages 'citation(&quot;pkgname&quot;)'.</code></pre>
+<pre><code>## 
+## Attaching package: 'Biobase'</code></pre>
+<pre><code>## The following object is masked from 'package:phyloseq':
+## 
+##     sampleNames</code></pre>
+<pre><code>## [1] '1.32.1'</code></pre>
+<pre class="r"><code>library(ggplot2); packageVersion(&quot;ggplot2&quot;);</code></pre>
+<pre><code>## [1] '2.2.1'</code></pre>
 <ul>
 <li>Except for <code>ggplot2</code>, these packages are not available through CRAN; rather you will have to go through bioconductor. See the <code>dada2</code> installation instructions for guidance. Note: you should already have <code>ggplot2</code>, but please document it as well.</li>
 </ul>
@@ -146,8 +214,22 @@ $(document).ready(function () {
 <li><p>the RDP species assignmet set from the same site as the RDP training set. Again, do not unzip it but DO store it in the same directory as the miseq files.</p></li>
 <li><p>You can provide evidence that you have downloaded these files with the following commands (in an R chunk):</p></li>
 </ul>
-<p>path &lt;- “~/MiSeq_SOP” # CHANGE THIS to the directory containing the fastq files after unzipping fns &lt;- list.files(path) fns</p>
-<p>Due on 3/22 at 5 pm.</p>
+</div>
+<div id="here-is-the-documentation-of-the-download-of-the-fastq-files-the-rdp-training-set-and-the-rdp-species-assignment" class="section level2">
+<h2>Here is the documentation of the download of the FASTQ files, the rdp training set and the rdp species assignment</h2>
+<pre class="r"><code>path &lt;- &quot;./rstudioprojectsvmac/MiSeqSOPData/MiSeq_SOP/&quot;# Directory containing the unzipped FASTQ files
+fns &lt;- list.files(path)
+fns</code></pre>
+<pre><code>## character(0)</code></pre>
+<pre class="r"><code>path &lt;- &quot;./rstudioprojectsvmac/rdp_train_set_14.fa&quot;# Directory containing the zipped rdp train set
+fns &lt;- list.files(path)
+fns</code></pre>
+<pre><code>## character(0)</code></pre>
+<pre class="r"><code>path &lt;- &quot;./rstudioprojectsvmac/rdp_species_assignment_14.fa&quot;# Directory containing the zipped rdp specices assignment
+fns &lt;- list.files(path)
+fns</code></pre>
+<pre><code>## character(0)</code></pre>
+</div>
 </div>
 
 

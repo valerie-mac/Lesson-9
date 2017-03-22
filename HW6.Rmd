@@ -1,7 +1,7 @@
 ---
 title: "HW6"
-author: "Vicki Hertzberg"
-date: "3/15/2017"
+author: "Valerie Mac"
+date: "3/22/2017"
 output: html_document
 ---
 
@@ -17,9 +17,25 @@ Please document that you have installed the necessary packages and downloaded th
 
 1. Document that you have installed `dada2` and `phyloseq`, as well as `shortread` and `ggplot2`. Use the installation guide at the dada2 site: (http://benjjneb.github.io/dada2/index.html)[http://benjjneb.github.io/dada2/index.html].
 
-- Sufficient documentation would consist of the following R commands (in an R chunk, of course), one line per required package:
 
-library(*package_name*); packageVersion("*package_name*");
+
+
+
+### Here is sufficient documentation of the installation of dada2, phyloseq, ShortRead, ggplot2:
+```{r}
+library(dada2); packageVersion("dada2");
+```
+
+```{r}
+library(phyloseq); packageVersion("phyloseq");
+```
+```{r}
+library(ShortRead); packageVersion("ShortRead");
+```
+```{r}
+library(ggplot2); packageVersion("ggplot2");
+```
+
 
 - Except for `ggplot2`, these packages are not available through CRAN; rather you will have to go through bioconductor. See the `dada2` installation instructions for guidance. Note: you should already have `ggplot2`, but please document it as well.
 
@@ -31,9 +47,20 @@ library(*package_name*); packageVersion("*package_name*");
 
 - You can provide evidence that you have downloaded these files with the following commands (in an R chunk):
 
-path <- "~/MiSeq_SOP" # CHANGE THIS to the directory containing the fastq files after unzipping
+##Here is the documentation of the download of the FASTQ files, the rdp training set and the rdp species assignment
+```{r}
+path <- "./rstudioprojectsvmac/MiSeqSOPData/MiSeq_SOP/"# Directory containing the unzipped FASTQ files
 fns <- list.files(path)
 fns
-
-Due on 3/22 at 5 pm.
+```
+```{r}
+path <- "./rstudioprojectsvmac/rdp_train_set_14.fa"# Directory containing the zipped rdp train set
+fns <- list.files(path)
+fns
+```
+```{r}
+path <- "./rstudioprojectsvmac/rdp_species_assignment_14.fa"# Directory containing the zipped rdp specices assignment
+fns <- list.files(path)
+fns
+```
 
